@@ -2,11 +2,11 @@ app.component('product-display', {
   props: {
     premium: {
       type: Boolean,
-      required: true
+      required: true,
     }
   },
   template: 
-  /*html*/
+  /* html */
   `<div class="product-display">
     <div class="product-container">
       <div class="product-image">
@@ -19,10 +19,7 @@ app.component('product-display', {
         <p v-else>Out of Stock</p>
 
         <p>Shipping: {{ shipping }}</p>
-
-        <ul>
-          <li v-for="detail in details">{{ detail }}</li>
-        </ul>
+        <product-details :details="details"></product-details>
 
         <div 
           v-for="(variant, index) in variants" 
@@ -32,13 +29,7 @@ app.component('product-display', {
           :style="{ backgroundColor: variant.color }">
         </div>
         
-        <button 
-          class="button" 
-          :class="{ disabledButton: !inStock }" 
-          :disabled="!inStock" 
-          v-on:click="addToCart">
-          Add to Cart
-        </button>
+        <button class="button" :class="{ disabledButton: !inStock }" :disabled="!inStock" @click="addToCart">Add to Cart</button>
       </div>
     </div>
   </div>`,
@@ -55,12 +46,12 @@ app.component('product-display', {
     }
   },
   methods: {
-      addToCart() {
-          this.cart += 1
-      },
-      updateVariant(index) {
-          this.selectedVariant = index
-      }
+    addToCart() {
+        this.$emit('add-to-cart', this.variants[this.selectedVariant].id)
+    },
+    updateVariant(index) {
+        this.selectedVariant = index
+    }
   },
   computed: {
       title() {
