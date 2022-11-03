@@ -30,11 +30,13 @@ app.component('product-display', {
         </div>
         
         <button class="button" :class="{ disabledButton: !inStock }" :disabled="!inStock" @click="addToCart">Add to Cart</button>
+        <button class="button" @click="removeItem">Remove Item</button>
       </div>
     </div>
   </div>`,
   data() {
     return {
+        cart: 0,
         product: 'Socks',
         brand: 'Vue Mastery',
         selectedVariant: 0,
@@ -48,6 +50,9 @@ app.component('product-display', {
   methods: {
     addToCart() {
         this.$emit('add-to-cart', this.variants[this.selectedVariant].id)
+    },
+    removeItem() {
+        this.$emit('remove-item', this.variants[this.selectedVariant].id)
     },
     updateVariant(index) {
         this.selectedVariant = index
